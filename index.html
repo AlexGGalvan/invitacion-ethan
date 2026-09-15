@@ -167,11 +167,12 @@
       cursor: pointer;
       z-index: 2;
       background:
-        radial-gradient(circle at 16% 21%, rgba(255, 211, 63, .88) 0 7px, transparent 8px),
-        radial-gradient(circle at 86% 18%, rgba(238, 48, 47, .78) 0 8px, transparent 9px),
-        radial-gradient(circle at 20% 78%, rgba(255, 255, 255, .34) 0 14%, transparent 15%),
-        repeating-conic-gradient(from -8deg at 50% 42%, rgba(255, 255, 255, .38) 0 8deg, rgba(168, 230, 255, .18) 8deg 16deg),
-        linear-gradient(180deg, #8ee7ff 0%, #43b8f1 45%, var(--blue) 72%, var(--deep-blue) 100%);
+        radial-gradient(circle at 16% 22%, rgba(255, 211, 63, .96) 0 7px, transparent 8px),
+        radial-gradient(circle at 84% 18%, rgba(238, 48, 47, .84) 0 8px, transparent 9px),
+        radial-gradient(circle at 12% 55%, rgba(255, 255, 255, .42) 0 10px, transparent 11px),
+        radial-gradient(circle at 89% 52%, rgba(25, 167, 165, .7) 0 8px, transparent 9px),
+        repeating-conic-gradient(from -8deg at 50% 42%, rgba(255, 255, 255, .42) 0 8deg, rgba(168, 230, 255, .2) 8deg 16deg),
+        linear-gradient(180deg, #92ebff 0%, #45bdf3 40%, var(--blue) 70%, var(--deep-blue) 100%);
     }
 
     .cover::before {
@@ -195,6 +196,122 @@
       pointer-events: none;
     }
 
+    .cover-scene {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .cover-curtain {
+      position: absolute;
+      top: -8px;
+      width: 33%;
+      height: 135px;
+      border-bottom: 9px solid var(--yellow);
+      background:
+        repeating-linear-gradient(105deg, var(--red) 0 18px, #fff4d7 18px 34px, var(--red) 34px 52px);
+      filter: drop-shadow(0 7px 0 rgba(18, 61, 124, .15));
+    }
+
+    .cover-curtain.left {
+      left: -17px;
+      border-radius: 0 0 86% 0;
+      transform: rotate(-9deg);
+    }
+
+    .cover-curtain.right {
+      right: -17px;
+      border-radius: 0 0 0 86%;
+      transform: rotate(9deg);
+    }
+
+    .cover-flags {
+      position: absolute;
+      top: 108px;
+      left: 9%;
+      right: 9%;
+      display: flex;
+      justify-content: space-between;
+      filter: drop-shadow(0 4px 0 rgba(18, 61, 124, .14));
+    }
+
+    .cover-flags i {
+      width: 0;
+      height: 0;
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-top: 28px solid var(--yellow);
+    }
+
+    .cover-flags i:nth-child(2n) {
+      border-top-color: var(--red);
+    }
+
+    .cover-flags i:nth-child(3n) {
+      border-top-color: var(--teal);
+    }
+
+    .circus-tent {
+      position: absolute;
+      bottom: 58px;
+      width: 122px;
+      height: 122px;
+      opacity: .98;
+      filter: drop-shadow(0 10px 0 rgba(18, 61, 124, .14));
+    }
+
+    .circus-tent::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      right: 11px;
+      top: 0;
+      height: 72px;
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+      background: repeating-linear-gradient(100deg, #fff7dc 0 17px, var(--red) 17px 34px);
+      border-bottom: 7px solid var(--yellow);
+    }
+
+    .circus-tent::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 58px;
+      border-radius: 12px 12px 0 0;
+      background:
+        linear-gradient(90deg, var(--deep-blue) 0 16%, transparent 16% 84%, var(--deep-blue) 84%),
+        repeating-linear-gradient(90deg, var(--red) 0 18px, #fff7dc 18px 36px);
+      border-top: 6px solid var(--yellow);
+    }
+
+    .circus-tent.left {
+      left: -29px;
+      transform: rotate(-7deg) scale(.92);
+    }
+
+    .circus-tent.right {
+      right: -29px;
+      transform: rotate(7deg) scale(.92);
+    }
+
+    .cover-stage {
+      position: absolute;
+      left: 9%;
+      right: 9%;
+      bottom: 76px;
+      height: 55px;
+      border: 4px solid rgba(255, 255, 255, .82);
+      border-radius: 50% 50% 10px 10px / 80% 80% 10px 10px;
+      background:
+        repeating-linear-gradient(90deg, var(--yellow) 0 27px, var(--red) 27px 54px, var(--blue) 54px 81px),
+        linear-gradient(180deg, rgba(255, 255, 255, .58), transparent);
+      opacity: .92;
+    }
+
     .book-toggle:checked + .book .cover {
       transform: rotateY(-145deg);
       filter: brightness(.86);
@@ -208,20 +325,20 @@
       width: 100%;
       height: 100%;
       min-height: 0;
-      padding: 0;
+      padding: 4px 0 0;
     }
 
     .cover img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      transform: translateY(4px) scale(1.04);
+      transform: translateY(10px) scale(1.12);
       filter: drop-shadow(0 18px 20px rgba(18, 61, 124, .26));
     }
 
     .cover-panel {
       position: relative;
-      z-index: 1;
+      z-index: 3;
       display: grid;
       gap: 5px;
       justify-items: center;
@@ -238,7 +355,7 @@
 
     .cover-title {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       display: grid;
       gap: 5px;
       justify-items: center;
@@ -625,6 +742,14 @@
         </div>
 
         <label class="cover" for="open-book" aria-label="Abrir invitación">
+          <div class="cover-scene" aria-hidden="true">
+            <span class="cover-curtain left"></span>
+            <span class="cover-curtain right"></span>
+            <span class="cover-flags"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="circus-tent left"></span>
+            <span class="circus-tent right"></span>
+            <span class="cover-stage"></span>
+          </div>
           <div class="cover-title">
             <span class="cover-kicker">Invitación digital</span>
             <h1>Ethan Mateo</h1>
