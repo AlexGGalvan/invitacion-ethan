@@ -925,6 +925,146 @@
       background: var(--blue);
     }
 
+    .celebration-burst {
+      position: absolute;
+      inset: -72px -48px -28px;
+      z-index: 8;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .celebration-burst span {
+      position: absolute;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    .balloon {
+      bottom: 20%;
+      width: 32px;
+      height: 40px;
+      border-radius: 54% 54% 48% 48%;
+      background:
+        radial-gradient(circle at 31% 24%, rgba(255, 255, 255, .88) 0 5px, transparent 6px),
+        var(--balloon-color, var(--red));
+      box-shadow: inset -6px -8px 0 rgba(18, 61, 124, .14), 0 6px 0 rgba(18, 61, 124, .08);
+    }
+
+    .balloon::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -7px;
+      width: 0;
+      height: 0;
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+      border-top: 8px solid var(--balloon-color, var(--red));
+      transform: translateX(-50%);
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      top: 94%;
+      left: 50%;
+      width: 2px;
+      height: 50px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .88);
+      transform: translateX(-50%);
+    }
+
+    .balloon.b1 {
+      left: 5%;
+      --balloon-color: var(--red);
+      --x: -22px;
+      --y: -188px;
+      --r: -14deg;
+      animation-delay: .08s;
+    }
+
+    .balloon.b2 {
+      left: 47%;
+      --balloon-color: var(--yellow);
+      --x: 4px;
+      --y: -218px;
+      --r: 8deg;
+      animation-delay: .18s;
+    }
+
+    .balloon.b3 {
+      right: 4%;
+      --balloon-color: #24c4ff;
+      --x: 27px;
+      --y: -194px;
+      --r: 15deg;
+      animation-delay: .28s;
+    }
+
+    .confetti {
+      bottom: 33%;
+      left: 50%;
+      width: 8px;
+      height: 14px;
+      border-radius: 2px;
+      background: var(--confetti-color, var(--yellow));
+    }
+
+    .confetti.c1 { --confetti-color: var(--red); --x: -168px; --y: -96px; --r: 160deg; animation-delay: .03s; }
+    .confetti.c2 { --confetti-color: var(--yellow); --x: -116px; --y: -150px; --r: 230deg; animation-delay: .13s; }
+    .confetti.c3 { --confetti-color: var(--teal); --x: -42px; --y: -180px; --r: 180deg; animation-delay: .08s; }
+    .confetti.c4 { --confetti-color: var(--blue); --x: 52px; --y: -176px; --r: 290deg; animation-delay: .17s; }
+    .confetti.c5 { --confetti-color: var(--red); --x: 126px; --y: -137px; --r: 210deg; animation-delay: .07s; }
+    .confetti.c6 { --confetti-color: var(--yellow); --x: 170px; --y: -76px; --r: 330deg; animation-delay: .2s; }
+    .confetti.c7 { --confetti-color: #ff7a31; --x: -134px; --y: 6px; --r: 260deg; animation-delay: .15s; }
+    .confetti.c8 { --confetti-color: #24c4ff; --x: 142px; --y: 14px; --r: 190deg; animation-delay: .11s; }
+
+    .book-toggle:checked + .book .balloon {
+      animation-name: balloon-rise;
+      animation-duration: 2.45s;
+      animation-timing-function: cubic-bezier(.16, .8, .22, 1);
+      animation-fill-mode: both;
+    }
+
+    .book-toggle:checked + .book .confetti {
+      animation-name: confetti-pop;
+      animation-duration: 1.35s;
+      animation-timing-function: cubic-bezier(.14, .72, .28, 1);
+      animation-fill-mode: both;
+    }
+
+    @keyframes balloon-rise {
+      0% {
+        opacity: 0;
+        transform: translateY(80px) scale(.56) rotate(0deg);
+      }
+      12% {
+        opacity: 1;
+      }
+      74% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(1) rotate(var(--r));
+      }
+    }
+
+    @keyframes confetti-pop {
+      0% {
+        opacity: 0;
+        transform: translate(0, 34px) scale(.7) rotate(0deg);
+      }
+      18% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(1) rotate(var(--r));
+      }
+    }
+
     @media (max-width: 390px) {
       main {
         padding: 18px 10px;
@@ -988,6 +1128,11 @@
         opacity: 0;
         transform: none;
       }
+
+      .celebration-burst span {
+        animation: none !important;
+        display: none;
+      }
     }
   </style>
 </head>
@@ -1022,7 +1167,7 @@
                 <span>de septiembre</span>
               </div>
               <div class="party-detail time" tabindex="0">
-                <strong>4:00 PM</strong>
+                <strong>3:30 PM</strong>
                 <span>nos vemos</span>
               </div>
             </div>
@@ -1033,7 +1178,7 @@
               <div class="map-card">
                 <iframe
                   title="Mapa de Calle Fierro 970 esquina con Treviño"
-                  src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3600.5154999202086!2d-103.23749922460749!3d25.521200177503733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjXCsDMxJzE2LjMiTiAxMDPCsDE0JzA1LjciVw!5e0!3m2!1ses!2smx!4v1789457616278!5m2!1ses!2smx"
+                  src="https://maps.google.com/maps?q=25.521200177503733,-103.23749922460749&amp;z=17&amp;hl=es&amp;output=embed"
                   loading="lazy"
                   referrerpolicy="strict-origin-when-cross-origin"
                   allowfullscreen>
@@ -1058,10 +1203,10 @@
             <p class="cover-invite">¡Acompáñame y celebremos!</p>
             <h1>Ethan Mateo</h1>
           </div>
-          <div class="cover-moment" aria-label="Sábado 26 de septiembre a las 4 de la tarde">
+          <div class="cover-moment" aria-label="Sábado 26 de septiembre a las 3:30 de la tarde">
             <span class="cover-day"><strong>26</strong><span>septiembre</span></span>
             <span class="moment-divider" aria-hidden="true"></span>
-            <span class="cover-time"><strong>4:00 PM</strong><span>Sábado</span></span>
+            <span class="cover-time"><strong>3:30 PM</strong><span>Sábado</span></span>
           </div>
           <div class="cover-party">
             <picture class="cover-character">
@@ -1084,6 +1229,19 @@
 
         <div class="sparkles" aria-hidden="true">
           <i></i><i></i><i></i><i></i>
+        </div>
+        <div class="celebration-burst" aria-hidden="true">
+          <span class="balloon b1"></span>
+          <span class="balloon b2"></span>
+          <span class="balloon b3"></span>
+          <span class="confetti c1"></span>
+          <span class="confetti c2"></span>
+          <span class="confetti c3"></span>
+          <span class="confetti c4"></span>
+          <span class="confetti c5"></span>
+          <span class="confetti c6"></span>
+          <span class="confetti c7"></span>
+          <span class="confetti c8"></span>
         </div>
       </div>
 
