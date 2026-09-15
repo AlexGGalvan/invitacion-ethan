@@ -3,11 +3,573 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Invitación Ethan</title>
+  <meta name="description" content="Invitación de cumpleaños de Ethan Mateo">
+  <title>Invitación de Ethan Mateo</title>
+  <style>
+    :root {
+      --blue: #1d7ed0;
+      --deep-blue: #123d7c;
+      --sky: #bdeeff;
+      --red: #ee302f;
+      --yellow: #ffd33f;
+      --cream: #fff8dd;
+      --teal: #19a7a5;
+      --ink: #183052;
+      --shadow: 0 24px 70px rgba(18, 61, 124, .28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: #c9f5ff;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 18% 15%, rgba(255, 211, 63, .9) 0 6px, transparent 7px),
+        radial-gradient(circle at 78% 20%, rgba(238, 48, 47, .72) 0 9px, transparent 10px),
+        radial-gradient(circle at 88% 80%, rgba(25, 167, 165, .6) 0 10px, transparent 11px),
+        linear-gradient(135deg, #dffbff 0%, #fff9d6 52%, #ffdfe5 100%);
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto auto 0 -8vw;
+      width: 48vw;
+      height: 48vw;
+      max-width: 520px;
+      max-height: 520px;
+      background:
+        radial-gradient(circle, rgba(255, 211, 63, .55) 0 18%, transparent 19%),
+        repeating-conic-gradient(from 8deg, rgba(238, 48, 47, .2) 0 10deg, rgba(29, 126, 208, .16) 10deg 20deg);
+      border-radius: 50%;
+      filter: blur(.2px);
+      opacity: .9;
+      pointer-events: none;
+    }
+
+    body::after {
+      inset: -14vw -10vw auto auto;
+      background:
+        radial-gradient(circle, rgba(25, 167, 165, .36) 0 20%, transparent 21%),
+        repeating-conic-gradient(from -8deg, rgba(255, 211, 63, .22) 0 12deg, rgba(238, 48, 47, .14) 12deg 24deg);
+    }
+
+    main {
+      position: relative;
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .garland {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      display: flex;
+      gap: 12px;
+      width: min(680px, 96vw);
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .garland span {
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 42px solid var(--red);
+      filter: drop-shadow(0 5px 0 rgba(18, 61, 124, .12));
+    }
+
+    .garland span:nth-child(2n) {
+      border-top-color: var(--yellow);
+    }
+
+    .garland span:nth-child(3n) {
+      border-top-color: var(--teal);
+    }
+
+    .invitation {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 18px;
+      justify-items: center;
+      width: min(100%, 520px);
+    }
+
+    .book-toggle {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .book {
+      position: relative;
+      width: min(92vw, 430px, calc((100vh - 105px) * 9 / 14));
+      min-width: min(92vw, 300px);
+      aspect-ratio: 9 / 14;
+      perspective: 1800px;
+      filter: drop-shadow(var(--shadow));
+    }
+
+    .inside,
+    .cover {
+      position: absolute;
+      inset: 0;
+      border: 8px solid #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      backface-visibility: hidden;
+    }
+
+    .inside {
+      display: grid;
+      align-items: stretch;
+      background:
+        linear-gradient(90deg, rgba(18, 61, 124, .16), transparent 13%, transparent 87%, rgba(18, 61, 124, .14)),
+        linear-gradient(180deg, #fffdf0 0%, #fff5bf 100%);
+      box-shadow: inset 0 0 0 2px rgba(255, 211, 63, .75);
+    }
+
+    .inside::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 2px dashed rgba(238, 48, 47, .5);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+
+    .cover {
+      display: grid;
+      align-content: end;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      transition: transform .95s cubic-bezier(.2, .8, .2, 1), filter .95s ease;
+      cursor: pointer;
+      z-index: 2;
+      background: var(--deep-blue);
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 18px;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .28), rgba(255, 255, 255, .12), transparent);
+      pointer-events: none;
+    }
+
+    .book-toggle:checked + .book .cover {
+      transform: rotateY(-145deg);
+      filter: brightness(.86);
+    }
+
+    .cover img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cover-panel {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 8px;
+      justify-items: center;
+      padding: 28px 18px 34px;
+      color: #fff;
+      text-align: center;
+      background: linear-gradient(0deg, rgba(18, 61, 124, .9) 0%, rgba(18, 61, 124, .68) 74%, transparent 100%);
+      text-shadow: 0 3px 0 rgba(18, 61, 124, .22);
+    }
+
+    .cover-kicker,
+    .page-kicker {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 14px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: clamp(.78rem, 2.7vw, .92rem);
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      background: var(--red);
+      box-shadow: 0 4px 0 rgba(18, 61, 124, .2);
+    }
+
+    .cover h1 {
+      max-width: 100%;
+      margin: 0;
+      color: #fff7c7;
+      font-size: clamp(2.6rem, 13vw, 4.55rem);
+      line-height: .9;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+      -webkit-text-stroke: 2px var(--red);
+      paint-order: stroke fill;
+    }
+
+    .cover-name {
+      max-width: 100%;
+      color: #fff;
+      font-size: clamp(1.25rem, 5vw, 1.85rem);
+      font-weight: 900;
+      line-height: 1.05;
+      overflow-wrap: anywhere;
+    }
+
+    .cover-date {
+      color: #fff;
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      font-weight: 800;
+    }
+
+    .spread {
+      position: relative;
+      display: grid;
+      gap: clamp(6px, 1.25vh, 10px);
+      align-content: start;
+      justify-items: center;
+      padding: clamp(18px, 4.7vw, 26px) clamp(18px, 6vw, 32px);
+      text-align: center;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+    }
+
+    .spread::before,
+    .spread::after {
+      content: "";
+      position: absolute;
+      width: 94px;
+      height: 94px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, var(--yellow) 0 13%, transparent 14%),
+        repeating-conic-gradient(var(--red) 0 15deg, #fff 15deg 30deg, var(--blue) 30deg 45deg);
+      opacity: .22;
+      pointer-events: none;
+    }
+
+    .spread::before {
+      left: -32px;
+      top: 34px;
+    }
+
+    .spread::after {
+      right: -38px;
+      bottom: 22px;
+    }
+
+    .page-kicker {
+      background: var(--blue);
+      min-height: 24px;
+      font-size: clamp(.68rem, 2.3vw, .8rem);
+    }
+
+    .spread h2 {
+      margin: 0;
+      color: var(--red);
+      font-size: clamp(1.95rem, 7vw, 2.78rem);
+      line-height: .88;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+      text-shadow: 0 3px 0 #fff, 0 6px 0 rgba(255, 211, 63, .7);
+    }
+
+    .birthday-line {
+      margin: 0;
+      color: var(--red);
+      font-size: clamp(1.08rem, 3.8vw, 1.42rem);
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 2px 0 #fff, 0 5px 0 rgba(255, 211, 63, .52);
+    }
+
+    .age-badge {
+      display: grid;
+      place-items: center;
+      width: clamp(68px, 18vw, 90px);
+      aspect-ratio: 1;
+      border: 7px solid #fff;
+      border-radius: 50%;
+      color: var(--red);
+      font-size: clamp(2.7rem, 12vw, 4.3rem);
+      font-weight: 900;
+      background:
+        radial-gradient(circle at 50% 42%, #fff7b2 0 30%, transparent 31%),
+        var(--yellow);
+      box-shadow: 0 8px 0 rgba(18, 61, 124, .13), inset 0 0 0 4px rgba(238, 48, 47, .18);
+    }
+
+    .age-badge span {
+      transform: translateY(-2px);
+    }
+
+    .details {
+      display: grid;
+      gap: 6px;
+      width: 100%;
+      margin: 2px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .details li {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      align-items: center;
+      min-height: 39px;
+      padding: 6px 10px;
+      border: 2px solid rgba(29, 126, 208, .16);
+      border-radius: 12px;
+      color: var(--ink);
+      font-size: clamp(.86rem, 3vw, 1rem);
+      font-weight: 800;
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .detail-icon {
+      display: grid;
+      place-items: center;
+      width: 25px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      color: #fff;
+      font-size: .82rem;
+      font-weight: 900;
+      background: var(--teal);
+    }
+
+    .detail-icon.red {
+      background: var(--red);
+    }
+
+    .detail-icon.yellow {
+      color: var(--deep-blue);
+      background: var(--yellow);
+    }
+
+    .message {
+      max-width: 32ch;
+      margin: 0;
+      color: #315078;
+      font-size: clamp(.8rem, 2.7vw, .9rem);
+      font-weight: 700;
+      line-height: 1.28;
+    }
+
+    .map-button,
+    .open-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+      min-height: 42px;
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      font: inherit;
+      font-weight: 900;
+      line-height: 1;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--red), #ff7a31);
+      box-shadow: 0 8px 0 rgba(18, 61, 124, .18);
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .map-button:hover,
+    .open-button:hover,
+    .map-button:focus-visible,
+    .open-button:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 0 rgba(18, 61, 124, .16);
+      outline: 3px solid rgba(255, 211, 63, .85);
+      outline-offset: 3px;
+    }
+
+    .open-button {
+      color: var(--deep-blue);
+      background: linear-gradient(135deg, var(--yellow), #fff3a0);
+    }
+
+    .book-toggle:checked ~ .open-button {
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+    }
+
+    .book-toggle:not(:checked) ~ .open-button .close-copy,
+    .book-toggle:checked ~ .open-button .open-copy {
+      display: none;
+    }
+
+    .sparkles {
+      position: absolute;
+      inset: -16px;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .sparkles i {
+      position: absolute;
+      width: 12px;
+      aspect-ratio: 1;
+      transform: rotate(45deg);
+      background: var(--yellow);
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, .52);
+    }
+
+    .sparkles i:nth-child(1) {
+      top: 8%;
+      left: -2%;
+      background: var(--red);
+    }
+
+    .sparkles i:nth-child(2) {
+      top: 18%;
+      right: -3%;
+      background: var(--teal);
+    }
+
+    .sparkles i:nth-child(3) {
+      right: 5%;
+      bottom: 7%;
+    }
+
+    .sparkles i:nth-child(4) {
+      bottom: 14%;
+      left: 4%;
+      background: var(--blue);
+    }
+
+    @media (max-width: 390px) {
+      main {
+        padding: 18px 10px;
+      }
+
+      .inside,
+      .cover {
+        border-width: 6px;
+        border-radius: 15px;
+      }
+
+      .cover-panel {
+        padding: 24px 12px 28px;
+      }
+
+      .spread {
+        gap: 11px;
+        padding: 22px 17px;
+      }
+
+      .details li {
+        grid-template-columns: 31px 1fr;
+        min-height: 42px;
+        padding: 7px 9px;
+      }
+
+      .detail-icon {
+        width: 24px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cover,
+      .map-button,
+      .open-button {
+        transition: none;
+      }
+
+      .book-toggle:checked + .book .cover {
+        opacity: 0;
+        transform: none;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="garland" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
   <main>
-    <h1>aquí va la invitación de Ethan</h1>
+    <section class="invitation" aria-label="Invitación de cumpleaños de Ethan Mateo">
+      <input class="book-toggle" type="checkbox" id="open-book">
+
+      <div class="book">
+        <div class="inside" aria-live="polite">
+          <div class="spread">
+            <span class="page-kicker">Fiesta temática Plim Plim</span>
+            <h2>Ethan Mateo</h2>
+            <p class="birthday-line">cumple 1 añito</p>
+            <div class="age-badge" aria-label="Un año"><span>1</span></div>
+
+            <ul class="details">
+              <li>
+                <span class="detail-icon red" aria-hidden="true">D</span>
+                <span>Sábado 26 de septiembre</span>
+              </li>
+              <li>
+                <span class="detail-icon yellow" aria-hidden="true">H</span>
+                <span>4:00 de la tarde</span>
+              </li>
+              <li>
+                <span class="detail-icon" aria-hidden="true">U</span>
+                <span>Ubicación lista para abrir en Maps</span>
+              </li>
+            </ul>
+
+            <p class="message">Acompáñanos a celebrar con magia, colores, música y muchas sonrisas.</p>
+            <a class="map-button" href="https://maps.app.goo.gl/mYRXQbmiBhsHR4teA?g_st=ic" target="_blank" rel="noopener">Ver ubicación</a>
+          </div>
+        </div>
+
+        <label class="cover" for="open-book" aria-label="Abrir invitación">
+          <picture>
+            <source srcset="assets/ethan-cover.webp" type="image/webp">
+            <img src="assets/ethan-cover.png" alt="">
+          </picture>
+          <div class="cover-panel">
+            <span class="cover-kicker">Invitación digital</span>
+            <h1>¡Celebra conmigo!</h1>
+            <div class="cover-name">Ethan Mateo</div>
+            <div class="cover-date">26 de septiembre · 4:00 PM</div>
+          </div>
+        </label>
+
+        <div class="sparkles" aria-hidden="true">
+          <i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+
+      <label class="open-button" for="open-book">
+        <span class="open-copy">Abrir invitación</span>
+        <span class="close-copy">Cerrar invitación</span>
+      </label>
+    </section>
   </main>
 </body>
 </html>
