@@ -334,11 +334,12 @@
     }
 
     .cover-character img {
-      width: min(105%, 330px);
-      height: 100%;
+      width: min(86%, 282px);
+      height: auto;
+      max-height: 96%;
       object-fit: contain;
       object-position: center bottom;
-      transform: translateY(-68px) rotate(-4deg);
+      transform: translateY(-32px) rotate(-4deg);
       filter: drop-shadow(0 18px 20px rgba(18, 61, 124, .26));
     }
 
@@ -470,6 +471,31 @@
       width: 100%;
       height: 100%;
       min-height: 0;
+    }
+
+    .cover-punctual {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      z-index: 5;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 92%;
+      padding: 7px 15px 8px;
+      color: #fff;
+      border: 3px solid #fff;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--red), #ff7a31);
+      box-shadow: 0 7px 0 rgba(18, 61, 124, .16);
+      font-size: clamp(.82rem, 3.1vw, 1.03rem);
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+      text-shadow: 0 2px 0 rgba(18, 61, 124, .2);
+      text-transform: uppercase;
+      white-space: nowrap;
+      transform: translateX(-50%) rotate(-2deg);
     }
 
     .cover-age {
@@ -736,6 +762,61 @@
       color: #121212;
       font-size: clamp(.72rem, 2.5vw, .86rem);
       font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .show-card {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 9px;
+      width: 100%;
+      padding: 7px 10px;
+      border: 3px solid #fff;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 92% 18%, rgba(255, 211, 63, .9) 0 7px, transparent 8px),
+        linear-gradient(135deg, #fff7b8, #fff 58%, #dff7ff);
+      box-shadow: 0 7px 0 rgba(18, 61, 124, .1);
+    }
+
+    .show-badge {
+      display: grid;
+      place-items: center;
+      width: clamp(42px, 11vw, 52px);
+      aspect-ratio: 1;
+      color: #fff;
+      border: 3px solid var(--yellow);
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: inset 0 -5px 0 rgba(18, 61, 124, .14);
+      font-size: clamp(1.12rem, 4.4vw, 1.42rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .show-copy {
+      display: grid;
+      gap: 2px;
+      text-align: left;
+    }
+
+    .show-copy strong {
+      color: var(--red);
+      font-size: clamp(.82rem, 3vw, 1rem);
+      font-weight: 900;
+      line-height: 1.05;
+      text-transform: uppercase;
+      text-shadow: 0 2px 0 rgba(255, 211, 63, .5);
+    }
+
+    .show-copy span {
+      color: var(--deep-blue);
+      font-size: clamp(.72rem, 2.5vw, .84rem);
+      font-weight: 900;
+      line-height: 1.1;
       text-transform: uppercase;
     }
 
@@ -1092,6 +1173,10 @@
         width: 54px;
       }
 
+      .cover-punctual {
+        padding-inline: 12px;
+      }
+
       .spread {
         gap: 7px;
         padding: 17px 15px;
@@ -1113,6 +1198,11 @@
 
       .location-block {
         padding: 7px 7px 8px;
+      }
+
+      .show-card {
+        gap: 7px;
+        padding: 7px 8px;
       }
     }
 
@@ -1172,6 +1262,14 @@
               </div>
             </div>
 
+            <div class="show-card" aria-label="Show infantil a las 5 de la tarde">
+              <span class="show-badge">5</span>
+              <span class="show-copy">
+                <strong>Tendremos show infantil</strong>
+                <span>No te lo pierdas a las 5:00 PM</span>
+              </span>
+            </div>
+
             <div class="location-block">
               <h3>Dirección de la fiesta</h3>
               <p>Calle Fierro 970, esquina con Treviño.</p>
@@ -1209,6 +1307,7 @@
             <span class="cover-time"><strong>3:30 PM</strong><span>Sábado</span></span>
           </div>
           <div class="cover-party">
+            <div class="cover-punctual">¡Llega puntual!</div>
             <picture class="cover-character">
               <source srcset="assets/plim-plim-party.webp" type="image/webp">
               <img src="assets/plim-plim-party.png" alt="Plim Plim celebrando">
