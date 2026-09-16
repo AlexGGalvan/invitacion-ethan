@@ -334,12 +334,12 @@
     }
 
     .cover-character img {
-      width: min(86%, 282px);
+      width: min(70%, 232px);
       height: auto;
-      max-height: 96%;
+      max-height: 86%;
       object-fit: contain;
       object-position: center bottom;
-      transform: translateY(-32px) rotate(-4deg);
+      transform: translateY(-8px) rotate(-4deg);
       filter: drop-shadow(0 18px 20px rgba(18, 61, 124, .26));
     }
 
@@ -769,43 +769,32 @@
       position: relative;
       z-index: 2;
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: 48px 1fr 48px;
       align-items: center;
-      gap: 9px;
+      gap: 4px;
       width: 100%;
-      padding: 7px 10px;
+      min-height: 68px;
+      padding: 7px 6px;
       border: 3px solid #fff;
       border-radius: 14px;
       background:
         radial-gradient(circle at 92% 18%, rgba(255, 211, 63, .9) 0 7px, transparent 8px),
+        radial-gradient(circle at 11% 82%, rgba(238, 48, 47, .8) 0 4px, transparent 5px),
+        radial-gradient(circle at 86% 78%, rgba(29, 126, 208, .75) 0 4px, transparent 5px),
         linear-gradient(135deg, #fff7b8, #fff 58%, #dff7ff);
       box-shadow: 0 7px 0 rgba(18, 61, 124, .1);
-    }
-
-    .show-badge {
-      display: grid;
-      place-items: center;
-      width: clamp(42px, 11vw, 52px);
-      aspect-ratio: 1;
-      color: #fff;
-      border: 3px solid var(--yellow);
-      border-radius: 50%;
-      background: var(--red);
-      box-shadow: inset 0 -5px 0 rgba(18, 61, 124, .14);
-      font-size: clamp(1.12rem, 4.4vw, 1.42rem);
-      font-weight: 900;
-      line-height: 1;
     }
 
     .show-copy {
       display: grid;
       gap: 2px;
-      text-align: left;
+      justify-items: center;
+      text-align: center;
     }
 
     .show-copy strong {
       color: var(--red);
-      font-size: clamp(.82rem, 3vw, 1rem);
+      font-size: clamp(.86rem, 3.3vw, 1.08rem);
       font-weight: 900;
       line-height: 1.05;
       text-transform: uppercase;
@@ -818,6 +807,80 @@
       font-weight: 900;
       line-height: 1.1;
       text-transform: uppercase;
+    }
+
+    .show-decor {
+      position: relative;
+      display: block;
+      width: 48px;
+      height: 52px;
+      pointer-events: none;
+    }
+
+    .show-decor::before,
+    .show-decor::after {
+      content: "";
+      position: absolute;
+      border-radius: 54% 54% 48% 48%;
+      box-shadow: inset -3px -5px 0 rgba(18, 61, 124, .14);
+    }
+
+    .show-decor::before {
+      top: 3px;
+      left: 7px;
+      width: 19px;
+      height: 24px;
+      background: var(--red);
+    }
+
+    .show-decor::after {
+      top: 13px;
+      right: 5px;
+      width: 16px;
+      height: 21px;
+      background: #24c4ff;
+    }
+
+    .show-decor.right::before {
+      left: auto;
+      right: 8px;
+      background: var(--yellow);
+    }
+
+    .show-decor.right::after {
+      right: auto;
+      left: 5px;
+      background: var(--teal);
+    }
+
+    .show-decor i {
+      position: absolute;
+      width: 7px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--confetti-color, var(--blue));
+      transform: rotate(var(--r, 18deg));
+    }
+
+    .show-decor i:nth-child(1) {
+      left: 3px;
+      bottom: 8px;
+      --confetti-color: var(--yellow);
+      --r: -22deg;
+    }
+
+    .show-decor i:nth-child(2) {
+      left: 22px;
+      bottom: 2px;
+      --confetti-color: var(--red);
+      --r: 31deg;
+    }
+
+    .show-decor i:nth-child(3) {
+      right: 4px;
+      bottom: 12px;
+      --confetti-color: var(--blue);
+      --r: 58deg;
     }
 
     .location-block {
@@ -1201,8 +1264,14 @@
       }
 
       .show-card {
-        gap: 7px;
-        padding: 7px 8px;
+        grid-template-columns: 41px 1fr 41px;
+        gap: 2px;
+        padding: 7px 5px;
+      }
+
+      .show-decor {
+        width: 41px;
+        height: 48px;
       }
     }
 
@@ -1263,11 +1332,12 @@
             </div>
 
             <div class="show-card" aria-label="Show infantil a las 5 de la tarde">
-              <span class="show-badge">5</span>
+              <span class="show-decor left" aria-hidden="true"><i></i><i></i><i></i></span>
               <span class="show-copy">
                 <strong>Tendremos show infantil</strong>
                 <span>No te lo pierdas a las 5:00 PM</span>
               </span>
+              <span class="show-decor right" aria-hidden="true"><i></i><i></i><i></i></span>
             </div>
 
             <div class="location-block">
