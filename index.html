@@ -958,18 +958,29 @@
       transform: rotate(-2deg);
     }
 
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+    }
+
     .map-button,
+    .rsvp-button,
+    .rsvp-submit,
+    .rsvp-close,
     .open-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 180px;
+      min-width: 0;
       min-height: 40px;
       padding: 9px 18px;
       border: 0;
       border-radius: 999px;
       color: #fff;
       font: inherit;
+      font-size: clamp(.72rem, 2.6vw, .92rem);
       font-weight: 900;
       line-height: 1;
       text-decoration: none;
@@ -980,13 +991,24 @@
     }
 
     .map-button:hover,
+    .rsvp-button:hover,
+    .rsvp-submit:hover,
+    .rsvp-close:hover,
     .open-button:hover,
     .map-button:focus-visible,
+    .rsvp-button:focus-visible,
+    .rsvp-submit:focus-visible,
+    .rsvp-close:focus-visible,
     .open-button:focus-visible {
       transform: translateY(-2px);
       box-shadow: 0 10px 0 rgba(18, 61, 124, .16);
       outline: 3px solid rgba(255, 211, 63, .85);
       outline-offset: 3px;
+    }
+
+    .rsvp-button {
+      color: var(--deep-blue);
+      background: linear-gradient(135deg, var(--yellow), #fff4a8);
     }
 
     .open-button {
@@ -997,6 +1019,135 @@
     .book-toggle:checked ~ .open-button {
       color: #fff;
       background: linear-gradient(135deg, var(--blue), var(--teal));
+    }
+
+    .rsvp-modal[hidden] {
+      display: none;
+    }
+
+    .rsvp-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(18, 48, 82, .54);
+    }
+
+    .rsvp-dialog {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      width: min(92vw, 370px);
+      padding: 22px;
+      overflow: hidden;
+      border: 6px solid #fff;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 12% 16%, rgba(255, 211, 63, .95) 0 9px, transparent 10px),
+        radial-gradient(circle at 88% 18%, rgba(238, 48, 47, .82) 0 8px, transparent 9px),
+        linear-gradient(180deg, #e6fbff, #fff 58%, #fff6be);
+      box-shadow: 0 24px 70px rgba(18, 48, 82, .32);
+      text-align: center;
+    }
+
+    .rsvp-dialog::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: -4%;
+      right: -4%;
+      height: 28px;
+      background: repeating-linear-gradient(90deg, var(--red) 0 28px, var(--yellow) 28px 56px, var(--teal) 56px 84px, var(--blue) 84px 112px);
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 96% 100%, 92% 45%, 88% 100%, 84% 45%, 80% 100%, 76% 45%, 72% 100%, 68% 45%, 64% 100%, 60% 45%, 56% 100%, 52% 45%, 48% 100%, 44% 45%, 40% 100%, 36% 45%, 32% 100%, 28% 45%, 24% 100%, 20% 45%, 16% 100%, 12% 45%, 8% 100%, 4% 45%, 0 100%);
+    }
+
+    .rsvp-dialog h2 {
+      margin: 10px 0 0;
+      color: var(--red);
+      font-size: clamp(1.45rem, 6vw, 2rem);
+      line-height: .95;
+      text-shadow: 0 3px 0 #fff, 0 6px 0 rgba(255, 211, 63, .6);
+    }
+
+    .rsvp-dialog p {
+      margin: 0;
+      color: #315078;
+      font-size: .92rem;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .guest-stepper {
+      display: grid;
+      grid-template-columns: 48px 1fr 48px;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .guest-stepper button {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      aspect-ratio: 1;
+      border: 0;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      box-shadow: 0 6px 0 rgba(18, 61, 124, .16);
+      font: inherit;
+      font-size: 1.55rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .guest-stepper input {
+      width: 100%;
+      min-width: 0;
+      padding: 8px 10px;
+      border: 4px solid var(--yellow);
+      border-radius: 16px;
+      color: var(--deep-blue);
+      background: #fff;
+      font: inherit;
+      font-size: 2.25rem;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+      box-shadow: inset 0 0 0 2px rgba(29, 126, 208, .13);
+    }
+
+    .rsvp-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .rsvp-submit {
+      background: linear-gradient(135deg, var(--red), #ff7a31);
+    }
+
+    .rsvp-close {
+      color: var(--deep-blue);
+      background: linear-gradient(135deg, #e8f8ff, #fff);
+    }
+
+    .rsvp-submit:disabled,
+    .rsvp-close:disabled,
+    .guest-stepper button:disabled,
+    .guest-stepper input:disabled {
+      cursor: not-allowed;
+      opacity: .65;
+    }
+
+    .rsvp-status {
+      min-height: 20px;
+      color: var(--deep-blue);
+      font-size: .8rem;
+      font-weight: 900;
+      line-height: 1.2;
     }
 
     .book-toggle:not(:checked) ~ .open-button .close-copy,
@@ -1295,6 +1446,9 @@
     @media (prefers-reduced-motion: reduce) {
       .cover,
       .map-button,
+      .rsvp-button,
+      .rsvp-submit,
+      .rsvp-close,
       .open-button,
       .party-detail {
         transition: none;
@@ -1370,7 +1524,10 @@
                 </iframe>
               </div>
             </div>
-            <a class="map-button" href="https://www.google.com/maps/search/?api=1&amp;query=25.5211944%2C-103.2349167" target="_blank" rel="noopener">Ver ubicación</a>
+            <div class="action-row">
+              <a class="map-button" href="https://www.google.com/maps/search/?api=1&amp;query=25.5211944%2C-103.2349167" target="_blank" rel="noopener">Ver ubicación</a>
+              <button class="rsvp-button" type="button" id="open-rsvp">Confirmar asistencia</button>
+            </div>
             <p class="wait-copy">¡Te esperamos!</p>
           </div>
         </div>
@@ -1437,5 +1594,148 @@
       </label>
     </section>
   </main>
+
+  <div class="rsvp-modal" id="rsvp-modal" hidden>
+    <form class="rsvp-dialog" id="rsvp-form">
+      <h2>Confirmar asistencia</h2>
+      <p id="rsvp-help">¿Cuántas personas asistirán?</p>
+      <div class="guest-stepper" aria-label="Cantidad de personas">
+        <button type="button" id="guest-minus" aria-label="Restar una persona">−</button>
+        <input id="guest-count" name="guest-count" type="number" inputmode="numeric" min="1" max="30" value="1" aria-label="Cantidad de personas">
+        <button type="button" id="guest-plus" aria-label="Agregar una persona">+</button>
+      </div>
+      <div class="rsvp-status" id="rsvp-status" aria-live="polite"></div>
+      <div class="rsvp-actions">
+        <button class="rsvp-close" type="button" id="close-rsvp">Cancelar</button>
+        <button class="rsvp-submit" type="submit" id="submit-rsvp">Confirmar</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    (() => {
+      const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLScGEKlA4nqo_e5Za7KyvzYKyDH6N96LLU7QsIpd5PDBawi6Hw/formResponse";
+      const PEOPLE_ENTRY = "entry.824094677";
+      const CONFIRMATION_ENTRY = "entry.1714654851";
+      const STORAGE_KEY = "ethanMateoRsvp";
+
+      const modal = document.getElementById("rsvp-modal");
+      const openButton = document.getElementById("open-rsvp");
+      const closeButton = document.getElementById("close-rsvp");
+      const form = document.getElementById("rsvp-form");
+      const input = document.getElementById("guest-count");
+      const minus = document.getElementById("guest-minus");
+      const plus = document.getElementById("guest-plus");
+      const status = document.getElementById("rsvp-status");
+      const help = document.getElementById("rsvp-help");
+      const submitButton = document.getElementById("submit-rsvp");
+
+      const clampGuests = (value) => Math.min(30, Math.max(1, Number.parseInt(value, 10) || 1));
+
+      const readSaved = () => {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        } catch {
+          return null;
+        }
+      };
+
+      const setDisabled = (disabled) => {
+        input.disabled = disabled;
+        minus.disabled = disabled;
+        plus.disabled = disabled;
+        submitButton.disabled = disabled;
+      };
+
+      const openModal = () => {
+        const saved = readSaved();
+        const alreadyConfirmed = Boolean(saved && saved.sent);
+
+        modal.hidden = false;
+        input.value = saved?.people || 1;
+        setDisabled(alreadyConfirmed);
+        help.textContent = alreadyConfirmed
+          ? "Ya registramos una confirmación desde este teléfono."
+          : "¿Cuántas personas asistirán?";
+        status.textContent = alreadyConfirmed
+          ? `Confirmación guardada: ${saved.people} persona${saved.people === 1 ? "" : "s"}.`
+          : "Revisa bien el número antes de confirmar.";
+        submitButton.textContent = alreadyConfirmed ? "Registrado" : "Confirmar";
+        closeButton.textContent = alreadyConfirmed ? "Cerrar" : "Cancelar";
+        setTimeout(() => (alreadyConfirmed ? closeButton : input).focus(), 0);
+      };
+
+      const closeModal = () => {
+        modal.hidden = true;
+        openButton.focus();
+      };
+
+      openButton.addEventListener("click", openModal);
+      closeButton.addEventListener("click", closeModal);
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) closeModal();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (!modal.hidden && event.key === "Escape") closeModal();
+      });
+
+      minus.addEventListener("click", () => {
+        input.value = clampGuests(input.value - 1);
+      });
+
+      plus.addEventListener("click", () => {
+        input.value = clampGuests(Number(input.value) + 1);
+      });
+
+      input.addEventListener("input", () => {
+        input.value = clampGuests(input.value);
+      });
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (readSaved()?.sent) {
+          status.textContent = "Esta confirmación ya quedó registrada desde este teléfono.";
+          return;
+        }
+
+        const people = clampGuests(input.value);
+        input.value = people;
+        setDisabled(true);
+        closeButton.disabled = true;
+        submitButton.textContent = "Enviando...";
+        status.textContent = "Guardando confirmación...";
+
+        const body = new URLSearchParams();
+        body.set(PEOPLE_ENTRY, String(people));
+        body.set(CONFIRMATION_ENTRY, "1");
+
+        try {
+          await fetch(FORM_ACTION, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body
+          });
+
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            sent: true,
+            people,
+            sentAt: new Date().toISOString()
+          }));
+
+          status.textContent = `¡Gracias! Registramos ${people} persona${people === 1 ? "" : "s"}.`;
+          submitButton.textContent = "Registrado";
+          setTimeout(closeModal, 1300);
+        } catch {
+          status.textContent = "No se pudo enviar. Revisa tu conexión e intenta de nuevo.";
+          setDisabled(false);
+          closeButton.disabled = false;
+          submitButton.textContent = "Confirmar";
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
